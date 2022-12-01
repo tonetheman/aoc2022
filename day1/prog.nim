@@ -9,18 +9,18 @@ proc p1() =
     var current_elf = 0
     var line : string
     while inf.read_line(line):
-        echo(line)
         if line == "":
-            echo("break")
             if current_elf > largest:
                 largest = current_elf
             current_elf = 0
         else:
             current_elf += parseInt(line)
 
+    echo("part1")
     echo("largest: ",largest)
+    echo("")
 
-# p1()
+p1()
 
 proc p2() =
     let inf = open("input.txt")
@@ -42,10 +42,10 @@ proc p2() =
     if current_elf>0:
         alle.add(current_elf)
 
+    echo("part2")
     echo("largest: ",largest)
     alle.sort()
 
-    let ll = len(alle)
-    echo("top 3: ", alle[ll-1] + alle[ll-2] + alle[ll-3])
+    echo("top 3: ", alle[^1] + alle[^2] + alle[^3])
 
 p2()
