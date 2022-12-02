@@ -8,6 +8,14 @@ Only thing interesting to me is the slice `^` operators. Much like python has. I
 https://nim-lang.org/docs/tut1.html#advanced-types-slices
 
 # day 2
+Nothing crazy for today either. Always hard to think ahead for part2 given you do not know how the problem will turn.
+
+So I went overboard and made enums and made big if statements. I think I could have come up with a coding scheme that would have made things easier to add up maybe. But it would have obscured things. So I left it simple stupid.
+
+
 # day 3
 # day 4
 # day 5
+# day 6
+# day 7
+# day 8
