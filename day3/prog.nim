@@ -69,4 +69,48 @@ proc p1() =
     echo("total: ",total_priority)
 
 # testsplit()
-p1()
+# p1()
+
+proc p2() =
+    let inf = open("input.txt")
+    defer: inf.close()
+
+    var total_priority = 0
+    var line : string
+    while true:
+
+        # weird code
+        # discard is needed since I know I am reading in groups of
+        # 3 lines at a time, who cares what the result of the read is?
+        # live dangerously
+        # this one is the only read_line that should fail        
+        if not inf.read_line(line):
+            break
+        # weird code, normally this should be a let to me not a var
+        # but if you use let it looks like nim is doing some optimization
+        # and not really copying ... maybe what comes out of readline
+        # is a cstring buffer? who knows
+        var e1 : string = line
+        discard inf.read_line(line)
+        var e2 = line
+        discard inf.read_line(line)
+        var e3 = line
+
+        echo(e1," ",e2," ",e3)
+        
+        let h1 = toHashSet(e1)
+        let h2 = toHashSet(e2)
+        let h3 = toHashSet(e3)
+
+        let res = h1.intersection(h2).intersection(h3)
+        echo(res)
+        echo("")
+
+        for k in res.items():
+            total_priority += priority(k)
+
+    echo("total: ",total_priority)
+        
+
+
+p2()
