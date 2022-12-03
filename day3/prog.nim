@@ -33,17 +33,24 @@ proc testsplit() =
     testme2("jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL")
     testme3("PmmdzqPrVvPwwTWBwg")
 
+proc priority(c : char ) : int =
+    if c >= 'a' and c <= 'z':
+        return ord(c) - ord('a') + 1
+    else:
+        return ord(c) - ord('A') + 1 + 26
+
 proc p1() =
-    let inf = open("sample.txt")
+    let inf = open("input.txt")
     defer: inf.close()
 
+    var total_priority = 0
     var line : string
     while inf.read_line(line):
 
         let ss : SplitString = split(line)
-        echo(ss)
-        let fCount = toCountTable(ss.f)
-        let sCount = toCountTable(ss.s)
+        # echo(ss)
+        # let fCount = toCountTable(ss.f)
+        # let sCount = toCountTable(ss.s)
         #for k,v in fCount.pairs:
         #    echo(k,v)
         # echo(typeof(fCount))
@@ -51,11 +58,15 @@ proc p1() =
         let hF = toHashSet(ss.f)
         let hS = toHashSet(ss.s)
 
-        echo(hF.intersection(hS))
+        let res = hF.intersection(hS)
+        # echo(res)
 
-
+        for k in res.items():
+            # echo(k," ",priority(k))
+            total_priority += priority(k)
         
-        echo("")
+        # echo("")
+    echo("total: ",total_priority)
 
-testsplit()
+# testsplit()
 p1()
