@@ -21,15 +21,15 @@ proc p1doesnotwork() =
         for i in parseInt(d2[0]) .. parseInt(d2[1]):
             s2.incl(i)
         
-        if s1 < s2:
+        if s1 <= s2:
             fully_contained += 1
-            echo("id: ",id, " s1<s2")
+            # echo("id: ",id, " s1<s2")
             id += 1
             continue
 
-        if s2 < s1:
+        if s2 <= s1:
             fully_contained += 1
-            echo("id: ",id, " s2<s1")
+            # echo("id: ",id, " s2<s1")
             id += 1
             continue
 
@@ -63,7 +63,7 @@ proc p1() =
                 count += 1
         if count == len(s1):
             fully_contained += 1
-            echo("id: ",id, " s1 in s2")
+            # echo("id: ",id, " s1 in s2")
             id += 1
             continue
         
@@ -74,7 +74,7 @@ proc p1() =
                 count += 1
         if count == len(s2):
             fully_contained += 1
-            echo("id: ",id, " s2 in s1")
+            # echo("id: ",id, " s2 in s1")
             id += 1
             continue
 
@@ -91,8 +91,8 @@ proc p1() =
 
     echo("full contained count: ",fully_contained)
 
-#p1doesnotwork()
-# p1()
+p1doesnotwork()
+p1()
 
 proc p2() =
     var fully_contained = 0
@@ -118,7 +118,7 @@ proc p2() =
         if count > 0:
         # if count == len(s1):
             fully_contained += 1
-            echo("id: ",id, " s1 in s2")
+            # echo("id: ",id, " s1 in s2")
             id += 1
             continue
         
@@ -130,7 +130,7 @@ proc p2() =
         if count > 0:
         # if count == len(s2):
             fully_contained += 1
-            echo("id: ",id, " s2 in s1")
+            # echo("id: ",id, " s2 in s1")
             id += 1
             continue
 
