@@ -1,5 +1,18 @@
 # advent of code 2022
 
+# day 4
+This one caused me problems. I used a HashSet from nim because I found an operator `<` that would check if a set is a proper subset.
+
+I could not get it to work.
+
+I changed over to an OrderedSet (really not needed just easier to debug) and there is no operator `<` for an OrderedSet for some reason.
+
+So I just used an iterator and a contains and did the check myself by counting.
+
+I still do not know why the first version of part1 did not work with a HashSet. Maybe I do not understand the `<` operator?
+
+The second part was extremely easy to do because I was already counting the members that were contained in the other set.
+
 
 # day 3
 Day of weirdness with nim.
@@ -51,10 +64,3 @@ Only thing interesting to me is the slice `^` operators. Much like python has. I
 https://nim-lang.org/docs/tut1.html#advanced-types-slices
 
 
-
-# day 3
-# day 4
-# day 5
-# day 6
-# day 7
-# day 8
