@@ -9,12 +9,11 @@ I changed over to an OrderedSet (really not needed just easier to debug) and the
 
 So I just used an iterator and a contains and did the check myself by counting.
 
---I still do not know why the first version of part1 did not work with a HashSet. Maybe I do not understand the `<` operator?--
-
-Figured it out. It was a mathematical definition aka strict and proper so I was missing some stuff. I needed to use the `<=` operator instead!
-
 The second part was extremely easy to do because I was already counting the members that were contained in the other set.
 
+I went back after I was done and read the nim docs closer. The `<` operator is a strict and proper test which will return false when the sets are exactly equal. So a mathematical definition. I should have read it closer clearly.
+
+So I changed the original broken code to now use `<=` and it worked as expected.
 
 # day 3
 Day of weirdness with nim.
