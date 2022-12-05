@@ -1,5 +1,17 @@
 # advent of code 2022
 
+# day 5
+Stacks. I do love stacks. Nim has calls that will let you simulate a stack. The `add` and `pop` calls on `seq[T]` work great for this.
+
+And AOC is fairly controlled so I did not do any type of bounds/error checking on the stack operations. I figured if I got an error or a bounds issue I was doing something wrong. In real life it would be more robust.
+
+The parsing today was gross. I decided that blank line was my real key and used that to handle parsing the package setup vs the movement data.
+
+I did not try to be fancy so everything is hardcoded AF.
+
+And improvement would be to remove that hard coding.
+
+
 # day 4
 This one caused me problems. I used a HashSet from nim because I found an operator `<` that would check if a set is a proper subset.
 
