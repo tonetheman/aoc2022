@@ -17,6 +17,13 @@ proc findfirstmove(buffer : seq[string]) : int =
         index += 1
     return index
 
+proc computeneededstacks(inputfile:string) : int =
+    let buffer = makefilebuffer(inputfile)
+    var index = findfirstmove(buffer)
+    index -= 2
+    let data = buffer[index].strip().split(" ")
+    return parseInt(data[^1])
+
 proc test(inputfile : string) =
     
     var buffer = makefilebuffer(inputfile)
@@ -42,4 +49,16 @@ proc test(inputfile : string) =
     # can i run the first part of my code at compile time?
     # var stacks : array[needed_stacks+1, seq[char]]
 
-test("sample.txt")
+proc testcompiletime() =
+    test("sample.txt")
+    echo(computeneededstacks("sample.txt"))
+    # this will not compile!
+    # complains about importc variable fopen
+    # maybe you cannot do io at compile time?
+    # let i = static(computeneededstacks("sample.txt"))
+
+    # another try also fails to compile
+    # var i : int
+    #static:
+    #    discard computeneededstacks("sample.txt")
+    #var junk : array[i,int]
