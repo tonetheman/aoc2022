@@ -11,6 +11,7 @@ I did not try to be fancy so everything is hardcoded AF.
 
 And improvement would be to remove that hard coding.
 
+edit: later I went back and made `progfun.nim` that does a much better handling of the input files. Nothing is hard coded in terms of the number of stacks. I still hard coded some of the positions of the data but it is effectively column based so that should be fine.
 
 # day 4
 This one caused me problems. I used a HashSet from nim because I found an operator `<` that would check if a set is a proper subset.
