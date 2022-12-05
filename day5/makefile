@@ -1,5 +1,8 @@
 
-all : prog readerjunk
+all : prog readerjunk progfun
+
+progfun : progfun.nim
+	nim c progfun.nim
 
 readerjunk : readerjunk.nim
 	nim c readerjunk.nim

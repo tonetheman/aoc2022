@@ -2,8 +2,6 @@
 import strutils
 import std/algorithm
 
-proc parse_starting_data(inputfile:string)
-
 proc makefilebuffer(inputfile:string) : seq[string] =
     var buffer : seq[string]
     var index = 0
@@ -20,35 +18,9 @@ proc findfirstmove(buffer : seq[string]) : int =
         index += 1
     return index
 
-proc computeneededstacks(inputfile:string) : int =
-    let buffer = makefilebuffer(inputfile)
-    var index = findfirstmove(buffer)
-    index -= 2
-    let data = buffer[index].strip().split(" ")
-    return parseInt(data[^1])
-
-proc testcompiletime() =
-    parse_starting_data("sample.txt")
-    echo(computeneededstacks("sample.txt"))
-    # this will not compile!
-    # complains about importc variable fopen
-    # maybe you cannot do io at compile time?
-    # let i = static(computeneededstacks("sample.txt"))
-
-    # another try also fails to compile
-    # var i : int
-    #static:
-    #    discard computeneededstacks("sample.txt")
-    #var junk : array[i,int]
-
-
-
 # this is a better way to read the inputs
-proc parse_starting_data(inputfile : string) =
+proc parse_starting_data(buffer: seq[string]) : seq[ seq[char] ] =
     
-    # read file input memory
-    var buffer = makefilebuffer(inputfile)
-
     # find the first move index in the buffer
     var index = findfirstmove(buffer)
     
@@ -101,8 +73,37 @@ proc parse_starting_data(inputfile : string) =
     for s in stacks.mitems:
         s.reverse()
 
-    echo("final stacks")
-    echo(stacks)
+    return stacks
 
-    
-parse_starting_data("input.txt")
+proc part1(inputfile:string) =
+    var buffer = makefilebuffer(inputfile)
+    var stacks = parse_starting_data(buffer)
+
+    var starting_point = findfirstmove(buffer)
+
+    # handle instructions
+    while true:
+        let line = buffer[starting_point]
+        let data = line.split(" ")
+        var num_to_move = parseInt(data[1])
+        let src = parseInt(data[3])
+        let dst = parseInt(data[5])
+
+        while num_to_move > 0:
+            let val = stacks[src].pop()
+            stacks[dst].add(val)
+            num_to_move -= 1
+        
+        starting_point += 1
+        if starting_point>len(buffer)-1:
+            break
+
+    var res : string
+    for i in 1 ..< len(stacks):
+        res = res & stacks[i][^1]
+    echo(res)
+
+
+
+
+part1("input.txt")
