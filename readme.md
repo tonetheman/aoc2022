@@ -1,5 +1,15 @@
 # advent of code 2022
 
+# day 6
+All about a protocol. Lots of hard codes in this. When you know where to start the problem is much easier.
+
+The first part of the problem I hard coded even the checking. But if I was writing a protocol checker IRL I would have done something similar for the first version.
+
+I stole my file reading routine from the previous day. So I reused code. Yay.
+
+The second part I felt was different enough version of the protocol that I changed my pattern for file names.
+Also the protocol changed enough that I had to remove some of the hard coding and let the compiler do the work on the check. So the checking code is better in part2 than part1.
+
 # day 5
 Stacks. I do love stacks. Nim has calls that will let you simulate a stack. The `add` and `pop` calls on `seq[T]` work great for this.
 
