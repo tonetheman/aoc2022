@@ -1,5 +1,16 @@
 # advent of code 2022
 
+# day 7
+Wow I do not like trees.
+
+Also learned about how pointers work (sort of) in nim. I found this GREAT reference:
+
+https://ssalewski.de/nimprogramming.html#_value_objects_and_references
+
+Most of the work was building a tree for the input. I am certain there are better ways to do it than what I ended up with.
+
+
+
 # day 6
 All about a protocol. Lots of hard codes in this. When you know where to start the problem is much easier.
 
