@@ -80,6 +80,72 @@ proc vis(a : seq[ seq[int] ], r,c : int) : bool =
     # echo("GOOD VALUE FOR B check: ", good)
     if good: return true
     
+proc see(a : seq[ seq[int] ], r,c : int) : int =
+    let rows = len(a)
+    let cols = len(a[0])
+
+    # look down
+    var ll = r+1
+    var mval = a[r][c]
+    var count1 = 0
+    while ll<rows:
+        # echo("checking: ",ll," ",c," ",a[ll][c])
+        if a[ll][c] < mval:
+            ll += 1
+            count1 += 1
+            continue
+        else:
+            count1 += 1
+            break
+    # echo("down count: ", count1)
+
+    # look right
+    ll = c+1
+    mval = a[r][c]
+    var count2 = 0
+    # echo("ll value: ",ll)
+    # echo("c value: ",c)
+    while ll<cols:
+        # echo("checking: ",r," ",ll," ",a[r][ll])
+        if a[r][ll] < mval:
+            ll += 1
+            count2 += 1
+            continue
+        else:
+            count2 += 1
+            break
+    # echo("right count: ",count2)
+
+    # look left
+    ll = c-1
+    mval = a[r][c]
+    var count3 = 0
+    while ll>=0:
+        if a[r][ll] < mval:
+            ll -= 1
+            count3 += 1
+            continue
+        else:
+            count3 += 1
+            break
+    # echo("left count: ",count3)
+
+    # look up
+    ll = r-1
+    mval = a[r][c]
+    var count4 = 0
+    while ll>=0:
+        if a[ll][c] < mval:
+            ll -= 1
+            count4 += 1
+            continue
+        else:
+            count4 += 1
+            break
+    # echo("up count: ",count4)
+
+    return count1 * count2 * count3 * count4
+
 
 proc count(a : seq[ seq[int] ]) : int =
     let rows = len(a)
@@ -96,11 +162,23 @@ proc count(a : seq[ seq[int] ]) : int =
     return res
 
 
-# data from file
-let data = makefilebuffer("input.txt")
-echo(data)
+proc part1() =
+    # data from file
+    let data = makefilebuffer("input.txt")
+    # create the grid
+    let a = creategrid(data)
+    let res = count(a)
+    echo("res: ",res)
 
-# create the grid
-let a = creategrid(data)
-let res = count(a)
-echo("res: ",res)
+proc part2() =
+    let data = makefilebuffer("input.txt")
+    var maxvalue = -1
+    let a = creategrid(data)
+    for i in 0 ..< len(a):
+        for j in 0 ..< len(a[0]):
+            let res = see(a,i,j)
+            if res>maxvalue:
+                maxvalue = res
+    echo("final max: ",maxvalue)
+
+part2()

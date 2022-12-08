@@ -1,5 +1,16 @@
 # advent of code 2022
 
+# day 8
+Tree heights. Nothing super tricky other than me not reading the problems super close.
+
+I think my solution is not optimized in any way though. I am certain I could have done it differently.
+
+I learned how to make a 2d array in nim
+```nim
+var a : seq[ seq[int] ] = newSeq[newSeq[int](cols)](rows)
+```
+I also reused my file reading from the previous day. I need to read how to handle modules instead of copy pasting it.
+
 # day 7
 Wow I do not like trees.
 
@@ -8,8 +19,6 @@ Also learned about how pointers work (sort of) in nim. I found this GREAT refere
 https://ssalewski.de/nimprogramming.html#_value_objects_and_references
 
 Most of the work was building a tree for the input. I am certain there are better ways to do it than what I ended up with.
-
-
 
 # day 6
 All about a protocol. Lots of hard codes in this. When you know where to start the problem is much easier.
