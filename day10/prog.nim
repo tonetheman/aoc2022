@@ -154,12 +154,17 @@ proc part2() =
 # part2()
 
 proc part22() =
-    let data = makefilebuffer("sample2.txt")
+    let data = makefilebuffer("input.txt")
     var cpu : CPU
     var pixel = 0
     var cycle = 1
     var crt = ""
     var ip = 0
+
+    proc incpixel() =
+        pixel += 1
+        if pixel >= 40:
+            pixel = 0
 
     proc setpixel() :bool =
         if pixel == cpu.X or pixel == cpu.xa or pixel == cpu.xc:
@@ -174,8 +179,20 @@ proc part22() =
     while true:
         let instruction = data[ip].split(" ")
         if instruction[0] == "noop":
-            echo("cycle ", cycle, " NOT IMPLEMENTED")
-            system.quit(0)
+            echo("Start cycle  ",cycle, "  begin executing: ", instruction)
+            var res = setpixel()
+            if res:
+                echo("During cycle ",cycle, "crt draws in pos ",pixel)
+            else:
+                echo("during cycle ",cycle, "crt does NOT draw", pixel)
+            echo("cur crt: ",crt)
+            echo("end of cycle ",cycle)
+            echo()
+
+            cycle += 1
+            incpixel()
+            # pixel += 1
+
         elif instruction[0] == "addx":
             echo("Start cycle  ",cycle, "  begin executing: ", instruction)
             var res = setpixel()
@@ -188,7 +205,8 @@ proc part22() =
             echo()
 
             cycle += 1
-            pixel += 1
+            incpixel()
+            # pixel += 1
 
             echo("start cycle ",cycle, " still executing ",instruction)
             res = setpixel()
@@ -205,14 +223,28 @@ proc part22() =
             echo()
 
             cycle += 1
-            pixel += 1
+            incpixel()
+            # pixel += 1
 
-        if ip == 4:
-            break
 
+        # if ip == 20:
+        #    break
 
         ip += 1
-        if ip>len(data):
+        if ip>=len(data):
             break
+    
+
+
+    proc printcrt() =
+        var crtpos = 0
+        while true:
+            echo(crt[crtpos ..< crtpos+40])
+            crtpos += 40
+            if crtpos>=len(crt):
+                break
+
+    printcrt()
+
 
 part22()
