@@ -81,10 +81,6 @@ proc part2() =
     # allocate the full CRT
     # prob a much better way to do this
     var crt : string = ""
-    for i in 0 ..< 40:
-        for j in 0 ..< 6:
-            crt = crt & '.'
-
 
     proc printcrt() =
         var crtpos = 0
@@ -97,7 +93,11 @@ proc part2() =
     proc setpixel() =
         echo("setpixel: ",pixel)
         if pixel == cpu.X or pixel == cpu.xa or pixel == cpu.xc:
-            crt[pixel] = '#'
+            echo("during cycle ",cycle, "position is ",pixel)
+            # crt[pixel] = '#'
+            crt.add('#')
+        else:
+            crt.add('.')
 
     proc dbg() =
         echo("cycle: ", cycle)
@@ -107,12 +107,12 @@ proc part2() =
         echo()
 
     echo("initcrt")
-    printcrt()
+    # printcrt()
     echo()
 
     while true:
         let current_instruction = data[ip].split(" ")
-        echo("current instruction: ",current_instruction)
+        echo("Start cycle ", cycle," ",current_instruction)
 
         if current_instruction[0]=="noop":
             # nothing happens
@@ -148,6 +148,71 @@ proc part2() =
         # if ip>2:
         #    break
 
-    printcrt()
+    # printcrt()
+    echo(crt)
 
-part2()
+# part2()
+
+proc part22() =
+    let data = makefilebuffer("sample2.txt")
+    var cpu : CPU
+    var pixel = 0
+    var cycle = 1
+    var crt = ""
+    var ip = 0
+
+    proc setpixel() :bool =
+        if pixel == cpu.X or pixel == cpu.xa or pixel == cpu.xc:
+            crt.add('#')
+            return true
+        else:
+            crt.add('.')
+            return false
+
+    setX(addr(cpu),1)
+
+    while true:
+        let instruction = data[ip].split(" ")
+        if instruction[0] == "noop":
+            echo("cycle ", cycle, " NOT IMPLEMENTED")
+            system.quit(0)
+        elif instruction[0] == "addx":
+            echo("Start cycle  ",cycle, "  begin executing: ", instruction)
+            var res = setpixel()
+            if res:
+                echo("During cycle ",cycle, "crt draws in pos ",pixel)
+            else:
+                echo("during cycle ",cycle, "crt does NOT draw", pixel)
+            echo("cur crt: ",crt)
+            echo("end of cycle ",cycle)
+            echo()
+
+            cycle += 1
+            pixel += 1
+
+            echo("start cycle ",cycle, " still executing ",instruction)
+            res = setpixel()
+            if res:
+                echo("During cycle ",cycle, "crt draws in pos ",pixel)
+            else:
+                echo("during cycle ",cycle, "crt does NOT draw", pixel)
+            echo("cur crt: ",crt)
+
+            echo("end of cycle ",cycle)
+            setX(addr(cpu), cpu.X + parseInt(instruction[1]))
+            echo("finished instruction ",instruction)
+            echo(cpu)
+            echo()
+
+            cycle += 1
+            pixel += 1
+
+        if ip == 4:
+            break
+
+
+        ip += 1
+        if ip>len(data):
+            break
+
+part22()
