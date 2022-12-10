@@ -1,5 +1,11 @@
 # advent of code 2022
 
+# day 10
+Took me a while because I never reset the damn pixel position.
+
+# day 9
+so insane I could not even do anything with it.
+
 # day 8
 Tree heights. Nothing super tricky other than me not reading the problems super close.
 
