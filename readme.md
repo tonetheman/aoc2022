@@ -1,5 +1,16 @@
 # advent of code 2022
 
+# day 11
+Oh to be in a scripting language. Mostly hard coded everything but I started to parse it and thought there were not that many monkeys.
+
+But part2 is not possible to solve with an int it appears. I am sure there is a trick of some sort but I have not cheated yet to see what that is. It has something to do with the numbers in the test all being prime.
+
+So I got part1 and I will have to punt on part2 for a while. I will end up having to cheat and see how other people solved it.
+
+Python with its magicially large integers or lisp you would not need to worry about overflow. In that regard nim sucks. But I still like the static type and speed. Just for problems with large numbers it is not great vs a language like Python.
+
+
+
 # day 10
 Took me a while because I never reset the damn pixel position.
 
