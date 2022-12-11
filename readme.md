@@ -9,6 +9,9 @@ So I got part1 and I will have to punt on part2 for a while. I will end up havin
 
 Python with its magicially large integers or lisp you would not need to worry about overflow. In that regard nim sucks. But I still like the static type and speed. Just for problems with large numbers it is not great vs a language like Python.
 
+edit: Tried some things like using mod to reduce the numbers down. Which did not work for some reason?
+Also tried a bignumber library this also did not work because of speed around 600 iterations it starts getting progressively slower and slower.
+
 
 
 # day 10
