@@ -82,6 +82,36 @@ proc turn(allMonkeys: var seq[Monkey], m: var Monkey) =
         sequtils.delete(m.items, 0, 0)
         echo("\tdelete")
 
+proc turn_part2(allMonkeys: var seq[Monkey], m: var Monkey) =
+    var count = 0
+    echo("monkey ",m.id)
+    for i in m.items:
+        count += 1
+        echo("\t\tworry level: ", i)
+        m.icount += 1
+        var new_worry = m.op(i)
+        echo("\t\tnew worry level: ", new_worry)
+        # new_worry = new_worry div 3
+        # echo("\t\tbored monkey: ", new_worry)
+        let res = m.tst(new_worry)
+        echo("\t\tres: ",res)
+        if res:
+            echo("\t\tthrow to ", m.tval)
+            allMonkeys[m.tval].items.add(new_worry)
+        else:
+            echo("\t\tthrow to ",m.fval)
+            allMonkeys[m.fval].items.add(new_worry)
+        echo("")
+    
+    for i in 0 .. count-1:
+        sequtils.delete(m.items, 0, 0)
+        echo("\tdelete")
+
+
+proc round_part2(allMonkeys : var seq[Monkey]) =
+    for m in allMonkeys.mitems:
+        turn_part2(allMonkeys, m)
+
 proc round(allMonkeys : var seq[Monkey]) =
     for m in allMonkeys.mitems:
         turn(allMonkeys, m)
@@ -142,10 +172,20 @@ proc input_monkeys() : seq[Monkey] =
 
 # var s = sample_monkeys()
 # p1(s)
-var s = input_monkeys()
-p1(s)
+# var s = input_monkeys()
+# p1(s)
 
 # [GCC 9.4.0] on linux
 # Type "help", "copyright", "credits" or "license" for more information.
 # >>> 303*298
 # 90294
+
+proc p2(allMonkeys: var seq[Monkey]) = 
+    for i in 0 ..< 20:
+        round_part2(allMonkeys)
+    for m in allMonkeys:
+        echo("Monkey ",m.id,": ",m.items)
+        echo("\ticount: ",m.icount)
+
+var s = sample_monkeys()
+p2(s)
