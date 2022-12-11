@@ -12,7 +12,7 @@ Python with its magicially large integers or lisp you would not need to worry ab
 edit: Tried some things like using mod to reduce the numbers down. Which did not work for some reason?
 Also tried a bignumber library this also did not work because of speed around 600 iterations it starts getting progressively slower and slower.
 
-
+edit2: Found a random comment on reddit and tried it. at least I am not the only person who is having trouble. it works for the sample but not for the input. sigh. And I have no clue why it works at all much less not works on the input.
 
 # day 10
 Took me a while because I never reset the damn pixel position.

@@ -1,4 +1,5 @@
 
+import std/algorithm
 import tonyutils
 import sequtils
 import strutils
@@ -151,13 +152,14 @@ proc input_monkeys() : seq[Monkey] =
 # >>> 303*298
 # 90294
 
-proc turn_part2(allMonkeys: var seq[Monkey], m: var Monkey) =
+proc turn_part2(allMonkeys: var seq[Monkey], m: var Monkey, cheat:int) =
     var count = len(m.items)-1
 
     for i in m.items:
         m.icount += 1
         var new_worry = m.op(i)
         # new_worry = new_worry div 3
+        new_worry = new_worry mod cheat
         let res = m.tst(new_worry)
         if res:
             allMonkeys[m.tval].items.add(new_worry)
@@ -167,42 +169,29 @@ proc turn_part2(allMonkeys: var seq[Monkey], m: var Monkey) =
     for i in 0 .. count:
         sequtils.delete(m.items, 0, 0)
 
-proc round_part2(allMonkeys : var seq[Monkey]) =
+proc round_part2(allMonkeys : var seq[Monkey],cheat : int) =
     for m in allMonkeys.mitems:
-        turn_part2(allMonkeys, m)
+        turn_part2(allMonkeys, m, cheat)
 
-proc p2(allMonkeys: var seq[Monkey]) = 
-    for i in 0 ..< 20:
-        round_part2(allMonkeys)
+proc p2(allMonkeys: var seq[Monkey]) =    
+    # NOT A CLUE AS TO WHY THIS WORKS
+    let cheat = 23*19*13*17
+    for i in 0 ..< 10000:
+        round_part2(allMonkeys,cheat)
+    
+    var res : seq[int] = newSeq[int]()
     for m in allMonkeys:
         echo("Monkey ",m.id,": ",m.items)
         echo("\ticount: ",m.icount)
+        res.add(m.icount)
+    res.sort()
+    echo(res)
+    let ll = len(res)
+    echo(res[ll-1]*res[ll-2])
 
-# not sure why this would not work
-# i should be able to go ahead and take the mod
-# as part of the operation to reduce the number
-# of bits needed
-proc sample_monkeys_part2() : seq[Monkey] =
-    proc m0_op(i:int):int = i*19 
-    proc m1_op(i:int):int = i+6
-    proc m2_op(i:int):int = i*i
-    proc m3_op(i:int):int = i+3
-    proc t0(i:int):bool = i mod 23 == 0
-    proc t1(i:int):bool = i mod 19 == 0
-    proc t2(i:int):bool = i mod 13 == 0
-    proc t3(i:int):bool = i mod 17 == 0
-    proc p0(i:int):int = i mod 23
-    proc p1(i:int):int = i mod 19
-    proc p2(i:int):int = i mod 13
-    proc p3(i:int):int = i mod 17
-
-    var allMonkeys : seq[Monkey] = newSeq[Monkey]()
-    allMonkeys.add(Monkey(id:0, items: @[79,98],op:m0_op,tst:t0,tval:2,fval:3,post:p0))
-    allMonkeys.add(Monkey(id:1, items: @[54,65,75,74],op:m1_op,tst:t1,tval:2,fval:0,post:p1))
-    allMonkeys.add(Monkey(id:2, items: @[79,60,97],op:m2_op,tst:t2,tval:1,fval:3,post:p2))
-    allMonkeys.add(Monkey(id:3, items: @[74],op:m3_op,tst:t3,tval:0,fval:1,post:p3))
-
-    return allMonkeys
-
-var s = sample_monkeys_part2()
+# var s = sample_monkeys()
+var s = input_monkeys()
 p2(s)
+
+# not correct
+# 22681801935
