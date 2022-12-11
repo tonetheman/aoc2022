@@ -84,28 +84,28 @@ proc turn(allMonkeys: var seq[Monkey], m: var Monkey) =
 
 proc turn_part2(allMonkeys: var seq[Monkey], m: var Monkey) =
     var count = 0
-    echo("monkey ",m.id)
+    # echo("monkey ",m.id)
     for i in m.items:
         count += 1
-        echo("\t\tworry level: ", i)
+        # echo("\t\tworry level: ", i)
         m.icount += 1
         var new_worry = m.op(i)
-        echo("\t\tnew worry level: ", new_worry)
+        # echo("\t\tnew worry level: ", new_worry)
         # new_worry = new_worry div 3
         # echo("\t\tbored monkey: ", new_worry)
         let res = m.tst(new_worry)
-        echo("\t\tres: ",res)
+        # echo("\t\tres: ",res)
         if res:
-            echo("\t\tthrow to ", m.tval)
+            # echo("\t\tthrow to ", m.tval)
             allMonkeys[m.tval].items.add(new_worry)
         else:
-            echo("\t\tthrow to ",m.fval)
+            # echo("\t\tthrow to ",m.fval)
             allMonkeys[m.fval].items.add(new_worry)
-        echo("")
+        # echo("")
     
     for i in 0 .. count-1:
         sequtils.delete(m.items, 0, 0)
-        echo("\tdelete")
+        # echo("\tdelete")
 
 
 proc round_part2(allMonkeys : var seq[Monkey]) =
@@ -181,11 +181,33 @@ proc input_monkeys() : seq[Monkey] =
 # 90294
 
 proc p2(allMonkeys: var seq[Monkey]) = 
-    for i in 0 ..< 20:
+    for i in 0 ..< 10000:
         round_part2(allMonkeys)
     for m in allMonkeys:
         echo("Monkey ",m.id,": ",m.items)
         echo("\ticount: ",m.icount)
 
-var s = sample_monkeys()
+# not sure why this would not work
+# i should be able to go ahead and take the mod
+# as part of the operation to reduce the number
+# of bits needed
+proc sample_monkeys_part2() : seq[Monkey] =
+    proc m0_op(i:int):int = (i*19) mod 23
+    proc m1_op(i:int):int = (i+6) mod 19
+    proc m2_op(i:int):int = (i*i) mod 13
+    proc m3_op(i:int):int = (i+3) mod 17
+    proc t0(i:int):bool = i mod 23 == 0
+    proc t1(i:int):bool = i mod 19 == 0
+    proc t2(i:int):bool = i mod 13 == 0
+    proc t3(i:int):bool = i mod 17 == 0
+
+    var allMonkeys : seq[Monkey] = newSeq[Monkey]()
+    allMonkeys.add(Monkey(id:0, items: @[79,98],op:m0_op,tst:t0,tval:2,fval:3))
+    allMonkeys.add(Monkey(id:1, items: @[54,65,75,74],op:m1_op,tst:t1,tval:2,fval:0))
+    allMonkeys.add(Monkey(id:2, items: @[79,60,97],op:m2_op,tst:t2,tval:1,fval:3))
+    allMonkeys.add(Monkey(id:3, items: @[74],op:m3_op,tst:t3,tval:0,fval:1))
+
+    return allMonkeys
+
+var s = sample_monkeys_part2()
 p2(s)
