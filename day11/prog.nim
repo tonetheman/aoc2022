@@ -175,9 +175,11 @@ proc round_part2(allMonkeys : var seq[Monkey],cheat : int) =
 
 proc p2(allMonkeys: var seq[Monkey]) =    
     # NOT A CLUE AS TO WHY THIS WORKS
-    let cheat = 23*19*13*17
+    let sample_cheat = 23*19*13*17
+    let part2_cheat = 2*7*11*19*3*5*17*13
+    let cheat = part2_cheat
     for i in 0 ..< 10000:
-        round_part2(allMonkeys,cheat)
+        round_part2(allMonkeys,part2_cheat)
     
     var res : seq[int] = newSeq[int]()
     for m in allMonkeys:
