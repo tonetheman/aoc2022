@@ -1,5 +1,15 @@
 # advent of code 2022
 
+# day 12
+FFS nim does some stuff great but documentation on fairly standard things like multi-dimensional arrays or sequences... well good luck here is google.
+
+I found an example on rosettacode that shows how to do a multi dimensional sequence. It is fairly similar to Java and other languages I have used.
+
+https://rosettacode.org/wiki/Create_a_two-dimensional_array_at_runtime#Nim
+
+
+
+
 # day 11
 Oh to be in a scripting language. Mostly hard coded everything but I started to parse it and thought there were not that many monkeys.
 
