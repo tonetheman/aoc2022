@@ -63,5 +63,5 @@ while true:
     echo("# ob bots   : ", bp.ob_robots)
     echo()
     minute += 1
-    if minute > 6:
+    if minute > 9:
         break
