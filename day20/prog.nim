@@ -7,6 +7,19 @@ type
         val : int
         snum : int
 
+proc repr(data : seq[Node]) : string =
+    var ts : string
+    for d in data:
+        ts = ts & " " & $d.val
+    return ts
+
+proc find_snum_index(data: seq[Node], target_snum : int) : int =
+    for i in 0 ..< len(data):
+        if data[i].snum == target_snum:
+            return i
+    # if you got here there is a problem
+    system.quit(-1)
+
 proc part1() =
     var fdata = makefilebuffer("sample.txt")
     var data : seq[Node] = newSeq[Node](len(fdata))
@@ -14,14 +27,7 @@ proc part1() =
         data[i].snum = i
         data[i].val = parseInt(fdata[i])
 
-    echo(data)
-
-    proc find_snum_index(target_snum : int) : int =
-        for i in 0 ..< len(data):
-            if data[i].snum == target_snum:
-                return i
-        # if you got here there is a problem
-        system.quit(-1)
+    echo("init arrangment: ",data.repr())
 
     let ll = len(data)
     for i in 0 ..< len(data):
@@ -29,7 +35,7 @@ proc part1() =
 
         # find the orig Node with snum == i
         let target_snum = i
-        var index = find_snum_index(target_snum)
+        var index = find_snum_index(data,target_snum)
         echo("\tindex is: ",index)
 
         var val = data[index]
@@ -42,17 +48,9 @@ proc part1() =
         echo("\t",val," ",num)
         data.insert(val,num mod ll)
         data.delete(index)
+        echo("\t",data.repr())
         
-
-        # move it in the list
-
-        # stop to debug
-        # break
-
-    var ts : string
-    for d in data:
-        ts = ts & " " & $d.val
-    echo(ts)
+    echo(data.repr())
 
 part1()
 
