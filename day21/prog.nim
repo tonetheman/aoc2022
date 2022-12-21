@@ -27,12 +27,6 @@ proc insert_new_action(m : var Table[string,Action], input_string:string) =
     m[mname] = Action(typ: mtyp, sact : mact, val: mval, completed: false)
     if mtyp == sInt:
         m[mname].completed = true
-    # echo(m[mname])
-
-let fdata = makefilebuffer("sample.txt")
-var m : Table[string,Action]
-for s in fdata:
-    insert_new_action(m, s)
 
 proc resolve(name : string, m : var Table[string,Action]) =
     if m[name].completed:
@@ -43,9 +37,6 @@ proc resolve(name : string, m : var Table[string,Action]) =
     let op = act[1]
     let v1 = act[0]
     let v2 = act[2]
-    echo("op: ",op)
-    echo("v1: ",v1)
-    echo("v2: ",v2)
 
     if m[v1].completed and m[v2].completed:
         if op == "*":
@@ -58,12 +49,28 @@ proc resolve(name : string, m : var Table[string,Action]) =
             m[name].val = m[v1].val + m[v2].val
             m[name].completed = true
         elif op == "/":
-            # TODO: NOT SURE IF THIS IS RIGHT
             m[name].val = int(m[v1].val / m[v2].val)
             m[name].completed = true
 
-# for s in m.keys:
-#     echo(s, " ", m[s])
+proc countcompleted(m : Table[string,Action]) : int =
+    var count = 0
+    for sm in m.keys:
+        if m[sm].completed:
+            count += 1
+    return count
 
-resolve("drzm",m)
-echo(m["drzm"])
+proc part1() =
+    let fdata = makefilebuffer("input.txt")
+    var m : Table[string,Action]
+    for s in fdata:
+        insert_new_action(m, s)
+
+    let ll = len(m)
+    while m.countcompleted() < ll:
+
+        for singlemonkey in m.keys:
+            resolve(singlemonkey,m)
+
+    echo("root is: ", m["root"])
+
+part1()
