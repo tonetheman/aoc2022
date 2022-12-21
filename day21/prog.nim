@@ -73,4 +73,18 @@ proc part1() =
 
     echo("root is: ", m["root"])
 
-part1()
+# part1()
+
+proc part2() =
+    let fdata = makefilebuffer("sample.txt")
+    var m : Table[string,Action]
+    for s in fdata:
+        insert_new_action(m,s)
+    
+    # adjust roots action
+
+    # change humn action to a number
+
+    # eval and look for root equality match
+
+part2()
