@@ -1,6 +1,6 @@
 
 prog : prog.nim
-	nim c prog.nim
+	nim -d:release c prog.nim
 
 clean :
 	rm -f prog
