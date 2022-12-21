@@ -72,24 +72,28 @@ proc resolve2(name : string, m : var Table[string,Action]) : int =
     let v2 = m[name].v2
 
     if name == "root":
-        if m[v1].completed and m[v2].completed:
-            if m[v1].val == m[v2].val:
-                m["root"].completed = true
-        return 100
+        # echo("\r2 in root: ",v1," ",m[v1])
+        # echo("\r2 in root: ",v2," ",m[v2])
+        if m[v1].completed == true:
+            if m[v2].completed == true:
+                if m[v1].val == m[v2].val:
+                    m["root"].completed = true
+                    return 100
 
-    if m[v1].completed and m[v2].completed:
-        if op == "*":
-            m[name].val = m[v1].val * m[v2].val
-            m[name].completed = true
-        elif op == "-":
-            m[name].val = m[v1].val - m[v2].val
-            m[name].completed = true
-        elif op == "+":
-            m[name].val = m[v1].val + m[v2].val
-            m[name].completed = true
-        elif op == "/":
-            m[name].val = int(m[v1].val / m[v2].val)
-            m[name].completed = true
+    if m[v1].completed == true:
+        if m[v2].completed == true:
+            if op == "*":
+                m[name].val = m[v1].val * m[v2].val
+                m[name].completed = true
+            elif op == "-":
+                m[name].val = m[v1].val - m[v2].val
+                m[name].completed = true
+            elif op == "+":
+                m[name].val = m[v1].val + m[v2].val
+                m[name].completed = true
+            elif op == "/":
+                m[name].val = int(m[v1].val / m[v2].val)
+                m[name].completed = true
     return 0
 
 proc countcompleted(m : Table[string,Action]) : int =
@@ -113,7 +117,7 @@ proc part1() =
 
     echo("root is: ", m["root"])
 
-# part1()
+part1()
 
 proc reset_completed(m : var Table[string,Action]) =
     for name in m.keys:
@@ -132,23 +136,24 @@ proc part2() =
     let ll = len(m)
 
     # change humn action to a number
-    for i in 0 ..< 3:
+    for i in 1 ..< 302:
         # echo("starting humn is: ", m["humn"])
         m.reset_completed()
         m["humn"].val = i
 
         # eval and look for root equality match
         block outer:
-            while m.countcompleted() < ll-1:
-
+            for j in 0 ..< ll:
+                # run through what you can
                 for singlemonkey in m.keys:
-                    let res = resolve2(singlemonkey,m)
-                    # 100 is a signal from root
-                    # that it did resolve true
-                    # which could happen early?
-                    if res == 100:
-                        echo("breaking to outer")
-                        break outer
+                    discard resolve2(singlemonkey,m)
+
+                let res = resolve2("root",m)
+                if res == 100:
+                    echo("breaking to outer res was: ",res)
+                    for s in m.keys:
+                        echo(s, " ",m[s])
+                    break outer
                     
 
         # echo("root completion: ",m["root"].completed)
@@ -158,6 +163,8 @@ proc part2() =
         # echo("root completion: ",m["root"].completed)
         if m["root"].completed == true:
             echo("i is ",i)
+            for name in m.keys:
+                echo(name, m[name])
             break
         else:
             discard """
@@ -167,4 +174,4 @@ proc part2() =
                 """
             
 
-part2()
+# part2()
